@@ -1,0 +1,31 @@
+i01 = Runtime.start("i01", "InMoov")
+
+
+WebGui = Runtime.create("WebGui","WebGui")
+WebGui.autoStartBrowser(True)
+WebGui.startService()
+
+WebGui.startBrowser("http://localhost:8888/#/service/ear")
+ear = Runtime.start("ear","WebkitSpeechRecognition")
+ear.setLanguage("en")
+
+mouth = Runtime.start("mouth", "MarySpeech")
+ear.addMouth(mouth)
+
+ear.setAutoListen(True)
+ear.setContinuous(False)
+
+def lightOn():
+  mouth.speakBlocking("light is on")
+ 
+def lightOff():
+  mouth.speakBlocking("light is off")
+ 
+def onText(text):
+     print text
+     if (text == "light on"):
+         lightOn()
+     elif (text == "light off"):
+         lightOff()
+ 
+ear.addListener("publishText","python","onText")

@@ -1,0 +1,35 @@
+
+WebGui = Runtime.create("WebGui","WebGui")
+WebGui.autoStartBrowser(False)
+WebGui.startService()
+
+WebGui.startBrowser("http://localhost:8880/#/service/ear")
+ear = Runtime.start("ear","WebkitSpeechRecognition")
+ear.setLanguage("en")
+
+mouth = Runtime.start("mouth", "MarySpeech")
+ear.addMouth(mouth)
+runtime.createAndStart("openni", "OpenNi")
+ear.setAutoListen(False)
+ear.setContinuous(False)
+
+
+mouth.speak("setup completed")
+
+ear.startListening()
+def startPresentation():
+	mouth.speak("Hello people, I am professor Inmoov and welcome to the best dancing show on earth. Our Team is Rozhin Heidari, Andrea Windisch, Jeremia Baumgartner, Jakob Schreiner, Benjamin Witzerstorfer. And today we have two wonderful contestants for our show, Jakob and John. Both are Robonova robots and are powered by a 5- cell NiMH battery with 6 volts. The 16 servos give incredible power and freedom of movement. The memory consists of an ATMEGA 128.")
+	sleep(31)	
+	mouth.speak(" I am a 3D printed robot and I am able to perceive sound, see, speak and move independently. My Kinect allows me to see and analyze the 3-dimensional space of the robot's environment. We use the MyRobotLab software to control me. I am written in Java and Python. I have a total of 28 servos. With what I move is a broken hoverboard with costume BLDC- motor controllers and a costume Battery circuit. It is controlled with an Arduino via UART. But now here are Jakob and John.")
+
+
+def holdMicrophone():
+	
+def onText(text):
+	print(text)
+	if text == "let's go" :
+		startPresentation()
+	if text =="hold this"
+		holdMicrophone()
+	
+ear.addListener("publishText","python","onText")
